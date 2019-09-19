@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -25,9 +26,22 @@ public class Employee {
 	private String ename;
 	private int esal;
 	@OneToOne(fetch = FetchType.LAZY)
-	@Cascade(CascadeType.SAVE_UPDATE)
+	@Cascade(CascadeType.ALL)
 	private Laptop laptop;
 
+	@OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, orphanRemoval = true)
+	@Cascade({ CascadeType.ALL})
+	private List<Vehicle> vehicles = new ArrayList<Vehicle>();
+
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "emp_prj",
+	joinColumns = { @JoinColumn(name = "fk_emp") },
+	inverseJoinColumns = { @JoinColumn(name = "fk_prj") })
+//	@Cascade(CascadeType.ALL) //no require for cascading in many to many as it autimatically work
+	private List<Project> projects = new ArrayList<Project>();
+	
+	
 	public Employee(int eno, String ename, int esal) {
 		super();
 		this.eno = eno;
@@ -35,18 +49,12 @@ public class Employee {
 		this.esal = esal;
 	}
 
-	@OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, orphanRemoval = true)
-	@Cascade({ CascadeType.SAVE_UPDATE })
-	private List<Vehicle> vehicles = new ArrayList<Vehicle>();
-
 	public Employee(int eno) {
 		super();
 		this.eno = eno;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@Cascade({ CascadeType.SAVE_UPDATE })
-	private List<Project> projects = new ArrayList<Project>();
+	
 
 	public Employee(int eno, String ename, int esal, Laptop laptop) {
 		super();

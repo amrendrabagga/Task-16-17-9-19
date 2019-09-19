@@ -65,8 +65,7 @@ public class ProjectCRUD {
 			project1.setPname(pname1);
 			project1.getEmployees().add(employee1);
 			Transaction tr = session.beginTransaction();
-
-			session.saveOrUpdate(project1);
+			session.persist(project1);
 			tr.commit();
 
 			break;

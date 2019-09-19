@@ -22,7 +22,7 @@ public class Project {
 	private int cost;
 
 	@ManyToMany(mappedBy = "projects")
-	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE_ORPHAN })
+	//@Cascade(CascadeType.ALL) //it wont work as we are using mappedBy property 
 	private List<Employee> employees = new ArrayList<Employee>();
 
 	@Override

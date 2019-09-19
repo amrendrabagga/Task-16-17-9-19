@@ -21,8 +21,8 @@ public class Vehicle {
 	private String model;
 	private int price;
 	@ManyToOne
-	@Cascade(CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "eno")
+	//@Cascade(CascadeType.ALL) as we cannot apply cascade effect from child table
 	private Employee employee;
 
 	public Vehicle(int regno, String brand, String model, int price, Employee employee) {

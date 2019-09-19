@@ -18,7 +18,6 @@ public class Laptop {
 	private String brand;
 	private int price;
 	@OneToOne(mappedBy = "laptop")
-	@Cascade(CascadeType.DELETE_ORPHAN)
 	private Employee employee;
 
 	public Laptop(int code, String brand, int price) {
